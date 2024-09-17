@@ -16,18 +16,19 @@ function App() {
 
   useEffect(() => {
     const id = setTimeout(() => {
-      let new_arr = [...data];
-      new_arr.map((e) => {
+      const new_arr = data.map((e) => {
         if (e.cityName === search) {
-          e.search = false;
+          return { ...e, search: false };
         }
+        return e;
       });
-      setData([...data]);
+      setData(new_arr); 
     }, 3000);
+  
     return () => {
       clearTimeout(id);
     };
-  }, [data]);
+  }, [data, search]);
 
   async function fetchData() {
     if (cityName === "") {
@@ -61,13 +62,13 @@ function App() {
   }
 
   function setBackground() {
-    let new_arr = [...data];
-    new_arr.map((e) => {
+    const new_arr = data.map((e) => {
       if (e.cityName === search) {
-        e.search = true;
+        return { ...e, search: true }; 
       }
+      return e;
     });
-    setData([...data]);
+    setData(new_arr);
   }
 
   return (
